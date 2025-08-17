@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>0x44 (CPScript) - Systems Engineer</title>
+    <style>
+        :root {
+            --dark: #0a0a0a;
+            --darker: #050505;
+            --medium: #1a1a1a;
+            --light: #2a2a2a;
+            --accent: #ff6b35;
+            --accent-light: #ff8c5c;
+            --accent-glow: rgba(255, 107, 53, 0.3);
+            --text-primary: #ffffff;
+            --text-secondary: #cccccc;
+            --text-muted: #888888;
+            --border: #333333;
+            --gradient-primary: linear-gradient(135deg, #ff6b35 0%, #ff4757 100%);
+            --gradient-secondary: linear-gradient(135deg, #2c2c2c 0%, #1a1a1a 100%);
+            --shadow-primary: 0 8px 32px rgba(0, 0, 0, 0.5);
+            --shadow-glow: 0 0 20px var(--accent-glow);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--darker);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, var(--accent-glow), transparent 70%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 107, 53, 0.1), transparent 70%);
+            animation: pulse 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero-text .tagline {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .hero-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--accent);
+            border: 2px solid var(--accent);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 107, 53, 0.4);
+        }
+
+        .hero-visual {
+            background: var(--gradient-secondary);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: var(--shadow-primary);
+            border: 1px solid var(--border);
+        }
+
+        .terminal {
+            background: var(--darker);
+            border-radius: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: var(--medium);
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27ca3f; }
+
+        .terminal-body {
+            padding: 1.5rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .prompt { color: var(--accent); }
+        .command { color: var(--text-primary); }
+        .output { color: var(--accent-light); }
+
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text strong {
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-card {
+            background: var(--gradient-secondary);
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+
+        .tech-stack {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-category {
+            background: var(--gradient-secondary);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border);
+        }
+
+        .tech-category h3 {
+            color: var(--accent);
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .tech-tag {
+            background: var(--medium);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .tech-tag:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: var(--gradient-secondary);
+            border-radius: 1rem;
+            padding: 2rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-primary);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .project-title {
+            color: var(--accent);
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tech {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .project-description {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-stats {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .footer {
+            background: var(--darker);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            color: var(--text-muted);
+        }
+
+        .footer-title {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                text-align: center;
+            }
+            
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .hero-links {
+                justify-content: center;
+            }
+            
+            .btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+            
+            .tech-stack {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--accent);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero-section">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-grid">
+                    <div class="hero-text">
+                        <h1>0x44<br>CPScript</h1>
+                        <div class="subtitle">Computational Systems Engineer</div>
+                        <div class="tagline">$ whoami → Security R&D Developer & Deep-Tech Generalist</div>
+                        <div class="hero-links">
+                            <a href="https://github.com/CPScript" class="btn btn-primary" target="_blank">GitHub</a>
+                            <a href="https://leetcode.com/u/0x44/" class="btn btn-secondary" target="_blank">LeetCode</a>
+                        </div>
+                    </div>
+                    <div class="hero-visual">
+                        <div class="terminal">
+                            <div class="terminal-header">
+                                <div class="terminal-dot dot-red"></div>
+                                <div class="terminal-dot dot-yellow"></div>
+                                <div class="terminal-dot dot-green"></div>
+                            </div>
+                            <div class="terminal-body">
+                                <div><span class="prompt">root@system:~$</span> <span class="command">cat /proc/expertise</span></div>
+                                <div class="output">Systems Programming: █████████ 100%</div>
+                                <div class="output">Cybersecurity: █████████ 100%</div>
+                                <div class="output">Reverse Engineering: █████████ 100%</div>
+                                <div class="output">Quantum Physics: █████░░░░░░ 45%</div>
+                                <div><span class="prompt">root@system:~$</span> <span class="command">uptime -s</span></div>
+                                <div class="output">2013-07-21 [12 years of development]</div>
+                                <div><span class="prompt">root@system:~$</span> <span class="command">echo $MOTTO</span></div>
+                                <div class="output">"If it runs on silicon, I've built or broken it"</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">↓</div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">About</h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>I'm an independent R&D engineer working at the intersection of <strong>computation, physics, and systems design</strong>. My expertise spans quantum-scale simulations, custom operating systems, kernel development, and hardware reverse engineering.</p>
+                    
+                    <p>From <strong>bootloaders to biology simulations</strong>, I approach systems from first principles, often reconstructing them entirely. My work includes AI systems, compiler theory, custom programming languages, and advanced cybersecurity tooling.</p>
+                    
+                    <p><strong>"If it runs on silicon or simulates the real world, I've probably built or broken it."</strong></p>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">123</div>
+                        <div class="stat-label">GitHub Repos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">120+</div>
+                        <div class="stat-label">Followers</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">710+</div>
+                        <div class="stat-label">Stars</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Languages</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background: var(--dark);">
+        <div class="container">
+            <h2 class="section-title">Technical Arsenal</h2>
+            <div class="tech-stack">
+                <div class="tech-category">
+                    <h3>Core Languages</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">C/C++</span>
+                        <span class="tech-tag">Rust</span>
+                        <span class="tech-tag">Assembly x86-64</span>
+                        <span class="tech-tag">JavaScript</span>
+                        <span class="tech-tag">Java</span>
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">Shell/Bash</span>
+                        <span class="tech-tag">PowerShell</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">+13 more</span>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Cybersecurity</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Malware Analysis</span>
+                        <span class="tech-tag">Reverse Engineering</span>
+                        <span class="tech-tag">Exploit Development</span>
+                        <span class="tech-tag">Rootkits</span>
+                        <span class="tech-tag">Firmware Cracking</span>
+                        <span class="tech-tag">Anti-Debug Systems</span>
+                        <span class="tech-tag">Red/Blue Team Tools</span>
+                        <span class="tech-tag">HWID Spoofing</span>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Systems Programming</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Kernel Development</span>
+                        <span class="tech-tag">Bootloaders</span>
+                        <span class="tech-tag">Memory Management</span>
+                        <span class="tech-tag">X11 Window Systems</span>
+                        <span class="tech-tag">Embedded Systems</span>
+                        <span class="tech-tag">FPGA Design</span>
+                        <span class="tech-tag">Microcontrollers</span>
+                        <span class="tech-tag">HDL Design</span>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Quantum & Physics</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Quantum RNG</span>
+                        <span class="tech-tag">Particle Simulation</span>
+                        <span class="tech-tag">Photon Entropy</span>
+                        <span class="tech-tag">Theoretical Physics</span>
+                        <span class="tech-tag">Biology Simulation</span>
+                        <span class="tech-tag">Cellular Modeling</span>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Network & Infrastructure</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">802.11 Protocols</span>
+                        <span class="tech-tag">Network Security</span>
+                        <span class="tech-tag">Protocol Design</span>
+                        <span class="tech-tag">VPN Systems</span>
+                        <span class="tech-tag">Tor Networks</span>
+                        <span class="tech-tag">Captive Portals</span>
+                    </div>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Graphics & Engines</h3>
+                    <div class="tech-list">
+                        <span class="tech-tag">Shader Development</span>
+                        <span class="tech-tag">Ray Tracing</span>
+                        <span class="tech-tag">GDI Systems</span>
+                        <span class="tech-tag">Rendering Engines</span>
+                        <span class="tech-tag">GPU Programming</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-style: italic;">
+                Note: My most advanced work remains private - these represent publicly available projects
+            </p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Rust-QuantumRNG</h3>
+                            <div class="project-tech">Rust • OpenCV • Arduino • Quantum Physics</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        High-performance quantum random number generator leveraging quantum mechanical phenomena in consumer hardware. Exploits shot noise in webcams, Johnson-Nyquist noise in microphones, and avalanche noise in photodiodes with Von Neumann debiasing and SHA-3 conditioning.
+                    </p>
+                    <div class="project-stats">
+                        <span>3 quantum sources</span>
+                        <span>Entropy analysis</span>
+                        <span>Production-ready</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Kitty-Tools</h3>
+                            <div class="project-tech">Python • JavaScript • Node.js</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Comprehensive Kahoot automation suite featuring GUI/CLI interfaces, anti-detection mechanisms, and cross-platform support for Windows, Linux, Android, iOS, and microcontrollers.
+                    </p>
+                    <div class="project-stats">
+                        <span>⭐ 136+ stars</span>
+                        <span>🍴 102+ forks</span>
+                        <span>Cross-platform</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Window_Manager</h3>
+                            <div class="project-tech">Rust</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Complete window manager implementation showcasing deep understanding of X11 protocols, asynchronous networking, and Linux GUI system architecture with custom compositing.
+                    </p>
+                    <div class="project-stats">
+                        <span>X11 protocols</span>
+                        <span>Async networking</span>
+                        <span>Custom compositor</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">NFCman</h3>
+                            <div class="project-tech">Android • Java • C • NFC Protocols</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Advanced NFC manipulation framework for Android devices via Termux. Enables hardware-level emulation through custom chipset firmware that bypasses Android's HCE limitations, supporting MIFARE Classic and multiple NFC technologies.
+                    </p>
+                    <div class="project-stats">
+                        <span>6 NFC protocols</span>
+                        <span>Custom firmware</span>
+                        <span>Hardware emulation</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Hx0x44-rootkit</h3>
+                            <div class="project-tech">C • Kernel</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Kernel exploitation techniques including syscall table modification, memory protection circumvention, and process/file hiding mechanisms that operate at kernel level where they're difficult to detect from userspace.
+                    </p>
+                    <div class="project-stats">
+                        <span>Syscall hooking</span>
+                        <span>Memory protection bypass</span>
+                        <span>Stealth operation</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">SinglePass-Compiler</h3>
+                            <div class="project-tech">Assembly x86-64</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Complete single-pass compiler written in pure x86-64 assembly that translates arithmetic expressions into executable x86-64 assembly code with full lexical analysis and code generation.
+                    </p>
+                    <div class="project-stats">
+                        <span>Pure assembly</span>
+                        <span>Single-pass</span>
+                        <span>Code generation</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Memory-Allocator</h3>
+                            <div class="project-tech">C</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Custom memory allocator providing malloc/free functionality using first-fit algorithm with boundary tags. Uses mmap() for 1MB heap allocation, manages with doubly-linked free list and block headers.
+                    </p>
+                    <div class="project-stats">
+                        <span>First-fit algorithm</span>
+                        <span>Boundary tags</span>
+                        <span>mmap() based</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">MicroPython-RayTracer</h3>
+                            <div class="project-tech">MicroPython • C</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Lightweight ray tracer optimized for MicroPython microcontrollers, featuring fast pixel rendering, framebuffer optimizations, and C-accelerated shading calculations for graphical calculators.
+                    </p>
+                    <div class="project-stats">
+                        <span>Embedded systems</span>
+                        <span>C acceleration</span>
+                        <span>Framebuffer optimization</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">ART</h3>
+                            <div class="project-tech">Python • ANSI • CLI</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        High-fidelity image-to-ASCII transformation framework with advanced terminal rendering capabilities, Unicode character mapping, ANSI color preservation, and stream-optimized I/O for converting images into terminal graphics.
+                    </p>
+                    <div class="project-stats">
+                        <span>16.7M colors</span>
+                        <span>Unicode mapping</span>
+                        <span>Stream optimized</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-title">CPScript • Security Researcher & Systems Developer</div>
+                <p>Developing innovative solutions at the intersection of computation and reality since 2013</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">© 2025 • Built with precision and passion</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
