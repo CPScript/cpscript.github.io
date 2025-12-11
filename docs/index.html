@@ -81,7 +81,7 @@
 
         .hero-grid {
             display: grid;
-            grid-template-columns: 1fr 400px;
+            grid-template-columns: 1fr 450px;
             gap: 4rem;
             align-items: center;
         }
@@ -210,7 +210,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 4rem;
-            align-items: center;
+            align-items: start;
         }
 
         .about-text {
@@ -230,7 +230,7 @@
 
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 2rem;
         }
 
@@ -240,11 +240,13 @@
             border-radius: 1rem;
             text-align: center;
             border: 1px solid var(--border);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
         }
 
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: var(--shadow-glow);
         }
 
         .stat-number {
@@ -259,6 +261,66 @@
             font-size: 1rem;
         }
 
+        .complexity-section {
+            background: var(--dark);
+            padding: 6rem 0;
+        }
+
+        .complexity-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .complexity-tier {
+            background: var(--gradient-secondary);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            border-left: 4px solid var(--accent);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .complexity-tier:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-primary);
+            border-left-width: 8px;
+        }
+
+        .complexity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .complexity-level {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .complexity-badge {
+            background: var(--medium);
+            color: var(--accent);
+            padding: 0.25rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .complexity-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .complexity-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         .tech-stack {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -271,6 +333,11 @@
             padding: 2rem;
             border-radius: 1rem;
             border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .tech-category:hover {
+            transform: translateY(-5px);
         }
 
         .tech-category h3 {
@@ -294,11 +361,13 @@
             font-size: 0.9rem;
             border: 1px solid var(--border);
             transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .tech-tag:hover {
             background: var(--accent);
             color: white;
+            transform: scale(1.05);
         }
 
         .projects-grid {
@@ -392,6 +461,35 @@
             margin-bottom: 1rem;
         }
 
+        .interactive-demo {
+            background: var(--darker);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            border: 1px solid var(--border);
+        }
+
+        .code-display {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            white-space: pre;
+            overflow-x: auto;
+        }
+
+        .level-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .level-10-13 { background: #ff4757; }
+        .level-14-18 { background: #ff6348; }
+        .level-6-9 { background: #ffa502; }
+        .level-1-5 { background: #26de81; }
+
         @media (max-width: 1024px) {
             .hero-grid {
                 grid-template-columns: 1fr;
@@ -405,6 +503,10 @@
             }
             
             .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -484,24 +586,33 @@
         <div class="scroll-indicator">↓</div>
     </section>
 
-    <section class="section">
+    <footer class="footer">
         <div class="container">
+            <div class="footer-content">
+                <div class="footer-title">CPScript • Security Researcher & Systems Developer</div>
+                <p>Developing solutions at the intersection of computation and reality since 2013</p>
+                <p style="margin-top: 1rem; font-size: 0.9rem;">© 2025 • Built with precision</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html><div class="container">
             <h2 class="section-title">About</h2>
             <div class="about-grid">
                 <div class="about-text">
                     <p>I'm an independent R&D engineer working at the intersection of <strong>computation, physics, and systems design</strong>. My expertise spans quantum-scale simulations, custom operating systems, kernel development, and hardware reverse engineering.</p>
                     
-                    <p>From <strong>bootloaders to biology simulations</strong>, I approach systems from first principles, often reconstructing them entirely. My work includes AI systems, compiler theory, custom programming languages, and advanced cybersecurity tooling.</p>
+                    <p>From <strong>bootloaders to biology simulations</strong>, I approach systems from first principles, often reconstructing them entirely. My work includes AI systems, compiler theory, custom programming languages, and systems security tooling.</p>
                     
-                    <p><strong>"If it runs on silicon or simulates the real world, I've probably built or broken it."</strong></p>
+                    <p><strong>"If it runs on silicon or simulates the real world, I've built or broken it."</strong></p>
                 </div>
                 <div class="stats-grid">
                     <div class="stat-card">
                         <div class="stat-number">30k+</div>
-                        <div class="stat-label">Profile Veiws (Since 2024)</div>
+                        <div class="stat-label">Profile Views (Since 2024)</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">120+</div>
+                        <div class="stat-number">128</div>
                         <div class="stat-label">Followers</div>
                     </div>
                     <div class="stat-card">
@@ -509,9 +620,314 @@
                         <div class="stat-label">Stars</div>
                     </div>
                     <div class="stat-card">
-                        <div class="stat-number">15+</div>
+                        <div class="stat-number">19+</div>
                         <div class="stat-label">Languages</div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+            <section class="section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-style: italic;">
+                Most work remains private - these represent publicly available projects
+            </p>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">57-bit CPU Architecture</h3>
+                            <div class="project-tech">Assembly x86-64 • C • Rust • HDL</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Complete processor architecture with custom instruction set spanning arithmetic, logical, memory management, and I/O operations. Includes thirty-two general-purpose registers, status flag management, ten-byte instruction format, and complete assembler with label resolution and machine code generation. Real-time hardware state visualization via bare-metal x86-64 kernel.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 18 complexity</span>
+                        <span>Assembler included</span>
+                        <span>Real-time visualization</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Apollo Kernel</h3>
+                            <div class="project-tech">C • Assembly x86-64</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        x86_64 operating system from scratch featuring modular component architecture, memory management with heap allocation and coalescing, PS/2 keyboard drivers with interrupt handling, multiboot2 compliance, VGA text mode terminal, command processor with interactive shell, page tables, and identity mapping.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 10 complexity</span>
+                        <span>Bare metal</span>
+                        <span>Complete OS</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Rust-QuantumRNG</h3>
+                            <div class="project-tech">Rust • OpenCV • Arduino • Quantum Physics</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Quantum random number generator leveraging quantum mechanical phenomena in consumer hardware. Exploits shot noise in webcams, Johnson-Nyquist noise in microphones, and avalanche noise in photodiodes with Von Neumann debiasing and SHA-3 conditioning.
+                    </p>
+                    <div class="project-stats">
+                        <span>3 quantum sources</span>
+                        <span>Entropy analysis</span>
+                        <span>Production-ready</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">SinglePass-Compiler</h3>
+                            <div class="project-tech">Assembly x86-64</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Complete single-pass compiler written in pure x86-64 assembly that translates arithmetic expressions into executable x86-64 assembly code with full lexical analysis and code generation.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 11 complexity</span>
+                        <span>Pure assembly</span>
+                        <span>Single-pass design</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Kitty-Tools</h3>
+                            <div class="project-tech">Python • JavaScript • Node.js</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Kahoot automation suite featuring GUI/CLI interfaces, anti-detection mechanisms, and cross-platform support for Windows, Linux, Android, iOS, and microcontrollers.
+                    </p>
+                    <div class="project-stats">
+                        <span>136+ stars</span>
+                        <span>102+ forks</span>
+                        <span>Cross-platform</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Window_Manager</h3>
+                            <div class="project-tech">Rust</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Complete window manager implementation showcasing deep understanding of X11 protocols, asynchronous networking, and Linux GUI system architecture with custom compositing.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 8 complexity</span>
+                        <span>X11 protocols</span>
+                        <span>Custom compositor</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">NFCman</h3>
+                            <div class="project-tech">Android • Java • C • NFC Protocols</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        NFC manipulation framework for Android devices via Termux. Hardware-level emulation through custom chipset firmware that bypasses Android's HCE limitations, supporting MIFARE Classic and multiple NFC technologies.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 6 complexity</span>
+                        <span>6 NFC protocols</span>
+                        <span>Hardware emulation</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Hx0x44-rootkit</h3>
+                            <div class="project-tech">C • Kernel</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Kernel exploitation techniques including syscall table modification, memory protection circumvention, and process/file hiding mechanisms at kernel level.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 13 complexity</span>
+                        <span>Syscall hooking</span>
+                        <span>Stealth operation</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Memory-Allocator</h3>
+                            <div class="project-tech">C</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Custom memory allocator providing malloc/free functionality using first-fit algorithm with boundary tags. Uses mmap() for 1MB heap allocation, manages with doubly-linked free list and block headers.
+                    </p>
+                    <div class="project-stats">
+                        <span>First-fit algorithm</span>
+                        <span>Boundary tags</span>
+                        <span>mmap() based</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">MicroPython-RayTracer</h3>
+                            <div class="project-tech">MicroPython • C</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Ray tracer optimized for MicroPython microcontrollers, featuring fast pixel rendering, framebuffer optimizations, and C-accelerated shading calculations for graphical calculators.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 12 complexity</span>
+                        <span>Embedded systems</span>
+                        <span>C acceleration</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">LucidShell</h3>
+                            <div class="project-tech">Rust</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Memory-safe Windows security shell built entirely in Rust demonstrating expertise in systems-level work, manual memory management, and low-level debugging.
+                    </p>
+                    <div class="project-stats">
+                        <span>Level 8 complexity</span>
+                        <span>Windows security</span>
+                        <span>Memory-safe</span>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">ART</h3>
+                            <div class="project-tech">Python • ANSI • CLI</div>
+                        </div>
+                    </div>
+                    <p class="project-description">
+                        Image-to-ASCII transformation framework with terminal rendering capabilities, Unicode character mapping, ANSI color preservation, and stream-optimized I/O for converting images into terminal graphics.
+                    </p>
+                    <div class="project-stats">
+                        <span>16.7M colors</span>
+                        <span>Unicode mapping</span>
+                        <span>Stream optimized</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="complexity-section">
+        <div class="container">
+            <h2 class="section-title">Development Complexity Mastery</h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-size: 1.1rem;">
+                Operating across 11 distinct difficulty tiers from Level 6 to Level 18
+            </p>
+            <div class="complexity-grid">
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-14-18"></span>Level 18</div>
+                        <div class="complexity-badge">CORE EXPERTISE</div>
+                    </div>
+                    <div class="complexity-title">Computer Architecture / CPU Design</div>
+                    <div class="complexity-desc">57-bit CPU architecture with complete instruction set, assembler, and real-time visualization kernel. Features thirty-two registers, comprehensive addressing, and hardware state modeling. And more~</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-10-13"></span>Level 13</div>
+                        <div class="complexity-badge">ADVANCED</div>
+                    </div>
+                    <div class="complexity-title">Systems Security Engineering</div>
+                    <div class="complexity-desc">Kernel exploitation, syscall table modification, rootkits, firmware analysis, reverse engineering, anti-debug systems, HWID spoofing.</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-10-13"></span>Level 12</div>
+                        <div class="complexity-badge">ADVANCED</div>
+                    </div>
+                    <div class="complexity-title">Rendering / Graphics Engineering</div>
+                    <div class="complexity-desc">GLSL/HLSL shaders, ray tracing, GDI systems, GPU programming, face/body tracking engines, rendering engines optimized for microcontrollers.</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-10-13"></span>Level 11</div>
+                        <div class="complexity-badge">ADVANCED</div>
+                    </div>
+                    <div class="complexity-title">Compiler/Interpreter Development</div>
+                    <div class="complexity-desc">Single-pass compiler in pure x86-64 assembly, System-Script programming language, lexical analysis, code generation, AST manipulation.</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-10-13"></span>Level 10</div>
+                        <div class="complexity-badge">PRIMARY FOCUS</div>
+                    </div>
+                    <div class="complexity-title">Operating System Development</div>
+                    <div class="complexity-desc">Apollo kernel: x86_64 OS with modular architecture, memory management, PS/2 drivers, multiboot2 compliance, VGA terminal, command processor, page tables.</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-6-9"></span>Level 9</div>
+                        <div class="complexity-badge">PROFICIENT</div>
+                    </div>
+                    <div class="complexity-title">Embedded Systems Development</div>
+                    <div class="complexity-desc">FPGA design, microcontrollers, HDL design, ray tracer for MicroPython, hardware constraints optimization.</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-10-13"></span>Level 8</div>
+                        <div class="complexity-badge">STRONG COMPETENCY</div>
+                    </div>
+                    <div class="complexity-title">Systems Programming</div>
+                    <div class="complexity-desc">C/C++/Rust projects, LucidShell (Rust security shell), X11 window manager, manual memory management, low-level debugging.</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-6-9"></span>Level 7</div>
+                        <div class="complexity-badge">PROFICIENT</div>
+                    </div>
+                    <div class="complexity-title">DevOps / Cloud Engineering</div>
+                    <div class="complexity-desc">Termux-Hotspot: NAT routing, DHCP services, captive portal authentication, software-defined networking.</div>
+                </div>
+
+                <div class="complexity-tier">
+                    <div class="complexity-header">
+                        <div class="complexity-level"><span class="level-indicator level-6-9"></span>Level 6</div>
+                        <div class="complexity-badge">STRONG</div>
+                    </div>
+                    <div class="complexity-title">Mobile App Development</div>
+                    <div class="complexity-desc">NFCman: Android NFC toolkit supporting MIFARE, ISO14443-4, FeliCa, Host Card Emulation. Java/Kotlin proficiency.</div>
                 </div>
             </div>
         </div>
@@ -543,7 +959,6 @@
                         <span class="tech-tag">Nim</span>
                         <span class="tech-tag">Batch</span>
                         <span class="tech-tag">VBStudio</span>
-                        <span class="tech-tag">+4 more</span>
                     </div>
                 </div>
 
@@ -607,10 +1022,9 @@
                         <span class="tech-tag">GDI Systems</span>
                         <span class="tech-tag">Rendering Engines</span>
                         <span class="tech-tag">GPU Programming</span>
-                        <span class="tech-tag">Face Tracking Engines Development</span>
-                        <span class="tech-tag">Body Tracing Engines Development</span>
+                        <span class="tech-tag">Face Tracking</span>
+                        <span class="tech-tag">Body Tracing</span>
                         <span class="tech-tag">Generative Engines</span>
-                        <span class="tech-tag">Processing Engines</span>
                     </div>
                 </div>
             </div>
@@ -618,176 +1032,3 @@
     </section>
 
     <section class="section">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <p style="text-align: center; color: var(--text-muted); margin-bottom: 3rem; font-style: italic;">
-                Note: My most advanced work remains private - these represent publicly available projects
-            </p>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">Rust-QuantumRNG</h3>
-                            <div class="project-tech">Rust • OpenCV • Arduino • Quantum Physics</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        High-performance quantum random number generator leveraging quantum mechanical phenomena in consumer hardware. Exploits shot noise in webcams, Johnson-Nyquist noise in microphones, and avalanche noise in photodiodes with Von Neumann debiasing and SHA-3 conditioning.
-                    </p>
-                    <div class="project-stats">
-                        <span>3 quantum sources</span>
-                        <span>Entropy analysis</span>
-                        <span>Production-ready</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">Kitty-Tools</h3>
-                            <div class="project-tech">Python • JavaScript • Node.js</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        Comprehensive Kahoot automation suite featuring GUI/CLI interfaces, anti-detection mechanisms, and cross-platform support for Windows, Linux, Android, iOS, and microcontrollers.
-                    </p>
-                    <div class="project-stats">
-                        <span>⭐ 136+ stars</span>
-                        <span>🍴 102+ forks</span>
-                        <span>Cross-platform</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">Window_Manager</h3>
-                            <div class="project-tech">Rust</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        Complete window manager implementation showcasing deep understanding of X11 protocols, asynchronous networking, and Linux GUI system architecture with custom compositing.
-                    </p>
-                    <div class="project-stats">
-                        <span>X11 protocols</span>
-                        <span>Async networking</span>
-                        <span>Custom compositor</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">NFCman</h3>
-                            <div class="project-tech">Android • Java • C • NFC Protocols</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        Advanced NFC manipulation framework for Android devices via Termux. Enables hardware-level emulation through custom chipset firmware that bypasses Android's HCE limitations, supporting MIFARE Classic and multiple NFC technologies.
-                    </p>
-                    <div class="project-stats">
-                        <span>6 NFC protocols</span>
-                        <span>Custom firmware</span>
-                        <span>Hardware emulation</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">Hx0x44-rootkit</h3>
-                            <div class="project-tech">C • Kernel</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        Kernel exploitation techniques including syscall table modification, memory protection circumvention, and process/file hiding mechanisms that operate at kernel level where they're difficult to detect from userspace.
-                    </p>
-                    <div class="project-stats">
-                        <span>Syscall hooking</span>
-                        <span>Memory protection bypass</span>
-                        <span>Stealth operation</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">SinglePass-Compiler</h3>
-                            <div class="project-tech">Assembly x86-64</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        Complete single-pass compiler written in pure x86-64 assembly that translates arithmetic expressions into executable x86-64 assembly code with full lexical analysis and code generation.
-                    </p>
-                    <div class="project-stats">
-                        <span>Pure assembly</span>
-                        <span>Single-pass</span>
-                        <span>Code generation</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">Memory-Allocator</h3>
-                            <div class="project-tech">C</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        Custom memory allocator providing malloc/free functionality using first-fit algorithm with boundary tags. Uses mmap() for 1MB heap allocation, manages with doubly-linked free list and block headers.
-                    </p>
-                    <div class="project-stats">
-                        <span>First-fit algorithm</span>
-                        <span>Boundary tags</span>
-                        <span>mmap() based</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">MicroPython-RayTracer</h3>
-                            <div class="project-tech">MicroPython • C</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        Lightweight ray tracer optimized for MicroPython microcontrollers, featuring fast pixel rendering, framebuffer optimizations, and C-accelerated shading calculations for graphical calculators.
-                    </p>
-                    <div class="project-stats">
-                        <span>Embedded systems</span>
-                        <span>C acceleration</span>
-                        <span>Framebuffer optimization</span>
-                    </div>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <div>
-                            <h3 class="project-title">ART</h3>
-                            <div class="project-tech">Python • ANSI • CLI</div>
-                        </div>
-                    </div>
-                    <p class="project-description">
-                        High-fidelity image-to-ASCII transformation framework with advanced terminal rendering capabilities, Unicode character mapping, ANSI color preservation, and stream-optimized I/O for converting images into terminal graphics.
-                    </p>
-                    <div class="project-stats">
-                        <span>16.7M colors</span>
-                        <span>Unicode mapping</span>
-                        <span>Stream optimized</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-title">CPScript • Security Researcher & Systems Developer</div>
-                <p>Developing innovative solutions at the intersection of computation and reality since 2013</p>
-                <p style="margin-top: 1rem; font-size: 0.9rem;">© 2025 • Built with precision and passion</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
